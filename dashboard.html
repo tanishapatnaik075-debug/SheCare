@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menstrual Health Dashboard</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#ffeef5;
+}
+
+.container{
+    width:400px;
+    margin:40px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px gray;
+}
+
+h2{
+    text-align:center;
+    color:#d63384;
+}
+
+label{
+    font-weight:bold;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:15px;
+    border-radius:5px;
+    border:1px solid gray;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#d63384;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#b52b70;
+}
+
+.result{
+    margin-top:20px;
+    background:#fff3f8;
+    padding:15px;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🌸 Menstrual Health Dashboard</h2>
+
+<label>Last Period Date</label>
+<input type="date" id="lastDate">
+
+<label>Cycle Length (Days)</label>
+<input type="number" id="cycle" value="28">
+
+<label>Mood</label>
+<select id="mood">
+<option>😊 Happy</option>
+<option>😐 Normal</option>
+<option>😔 Sad</option>
+<option>😣 Irritated</option>
+</select>
+
+<label>Pain Level (0-10)</label>
+<input type="range" min="0" max="10" id="pain">
+
+<button onclick="calculate()">Predict Next Period</button>
+
+<div class="result">
+
+<p id="next"></p>
+
+<p id="fertile"></p>
+
+<p id="tip"></p>
+
+</div>
+
+</div>
+
+<script>
+
+function calculate(){
+
+let last=new Date(document.getElementById("lastDate").value);
+
+let cycle=parseInt(document.getElementById("cycle").value);
+
+let next=new Date(last);
+
+next.setDate(next.getDate()+cycle);
+
+let fertileStart=new Date(last);
+
+fertileStart.setDate(fertileStart.getDate()+cycle-14);
+
+let fertileEnd=new Date(fertileStart);
+
+fertileEnd.setDate(fertileEnd.getDate()+5);
+
+document.getElementById("next").innerHTML=
+"🩸 Next Period: <b>"+next.toDateString()+"</b>";
+
+document.getElementById("fertile").innerHTML=
+"🌿 Fertile Window: <b>"+fertileStart.toDateString()+" - "+fertileEnd.toDateString()+"</b>";
+
+let mood=document.getElementById("mood").value;
+
+document.getElementById("tip").innerHTML=
+"💖 Health Tip: Stay hydrated, eat iron-rich foods and get enough sleep. Current Mood: <b>"+mood+"</b>";
+
+}
+
+</script>
+
+</body>
+</html>
